@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Ramesh Korapati — React Portfolio
 
 Modern dark/red portfolio inspired by the selected reference design.
@@ -35,6 +34,3 @@ The contact API runs at http://localhost:5000.
 ## Profile photo
 
 Replace the placeholder profile area in `src/main.jsx` with an image when you have the preferred professional photo. No photo was supplied with the resume.
-=======
->>>>>>> 5d44dd66b962e07c3049fafa7086f2546c7b2e71
-"# anna-portfolio" 
