@@ -34,3 +34,6 @@ The contact API runs at http://localhost:5000.
 ## Profile photo
 
 Replace the placeholder profile area in `src/main.jsx` with an image when you have the preferred professional photo. No photo was supplied with the resume.
+
+## Netlify Contact Form
+The portfolio contact form is configured for Netlify Forms, so it does not require the Flask backend for contact submissions. After deploying, view submissions in Netlify under Forms.

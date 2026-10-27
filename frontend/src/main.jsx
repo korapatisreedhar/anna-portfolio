@@ -136,10 +136,10 @@ function App() {
     const form = new FormData(e.currentTarget);
     const payload = Object.fromEntries(form.entries());
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch("/", {
         method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(payload)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ "form-name": "contact", ...formData })
       });
       const data = await res.json();
       setMessage(data.message || "Message submitted.");
