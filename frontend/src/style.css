@@ -531,31 +531,76 @@ textarea:focus {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: .6;
+    overflow: hidden;
     background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
     background-size: 80px 80px
 }
 
-.dot {
+.orb-layer {
     position: absolute;
-    width: 3px;
-    height: 3px;
-    background: var(--muted);
-    border-radius: 50%;
-    animation: float 6s ease-in-out infinite
+    inset: 0;
+    transform: translate3d(var(--pointer-shift, 0px), 0, 0);
+    transition: transform .25s ease-out
 }
 
-@keyframes float {
+.orb {
+    position: absolute;
+    top: -12vh;
+    display: block;
+    border-radius: 50%;
+    opacity: .42;
+    background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .9), var(--orb-color) 45%, transparent 76%);
+    box-shadow: 0 0 28px var(--orb-glow);
+    animation: orb-fall linear infinite;
+    will-change: transform
+}
 
-    0%,
-    100% {
-        transform: translate(0, 0);
-        opacity: .2
+.orb:nth-child(4n + 1) {
+    --orb-color: #2dd4bf;
+    --orb-glow: rgba(45, 212, 191, .28)
+}
+
+.orb:nth-child(4n + 2) {
+    --orb-color: #60a5fa;
+    --orb-glow: rgba(96, 165, 250, .26)
+}
+
+.orb:nth-child(4n + 3) {
+    --orb-color: #a78bfa;
+    --orb-glow: rgba(167, 139, 250, .24)
+}
+
+.orb:nth-child(4n) {
+    --orb-color: #fbbf24;
+    --orb-glow: rgba(251, 191, 36, .22)
+}
+
+body.light .orb {
+    opacity: .28
+}
+
+@keyframes orb-fall {
+    from {
+        transform: translate3d(0, -12vh, 0)
     }
 
-    50% {
-        transform: translate(25px, -20px);
-        opacity: .9
+    to {
+        transform: translate3d(var(--drift), 112vh, 0)
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orb-layer {
+        display: none
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important
     }
 }
 

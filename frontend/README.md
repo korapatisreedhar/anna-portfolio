@@ -8,6 +8,7 @@ A responsive personal portfolio built with React and Vite. It showcases professi
 - Profile photo and professional introduction
 - Technology stack and certification cards
 - Project cards with category filters
+- Subtle falling color orbs that respond to pointer movement and respect reduced-motion settings
 - Experience timeline
 - Contact details, LinkedIn profile, and resume download link
 - Bootstrap styling and Bootstrap Icons

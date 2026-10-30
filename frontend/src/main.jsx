@@ -130,14 +130,46 @@ const certifications = [
 ];
 
 function Particles() {
-  const dots = Array.from({length: 55}, (_, i) => i);
-  return <div className="particle-layer" aria-hidden="true">
-    {dots.map(i => <span key={i} className="dot" style={{
-      left: `${(i * 37) % 100}%`,
-      top: `${(i * 61) % 100}%`,
-      animationDelay: `${(i % 9) * .35}s`
-    }} />)}
-  </div>;
+  const orbs = Array.from({ length: 42 }, (_, i) => i);
+
+  useEffect(() => {
+    let frame;
+    const handlePointerMove = event => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const shift = ((event.clientX / window.innerWidth) - 0.5) * 36;
+        document.documentElement.style.setProperty("--pointer-shift", `${shift}px`);
+      });
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      cancelAnimationFrame(frame);
+      document.documentElement.style.removeProperty("--pointer-shift");
+    };
+  }, []);
+
+  return (
+    <div className="particle-layer" aria-hidden="true">
+      <div className="orb-layer">
+        {orbs.map(i => (
+          <span
+            key={i}
+            className="orb"
+            style={{
+              left: `${(i * 37 + Math.floor(i / 6) * 11) % 100}%`,
+              width: `${10 + (i * 13) % 26}px`,
+              height: `${10 + (i * 13) % 26}px`,
+              animationDelay: `${-((i * 1.9) % 36)}s`,
+              animationDuration: `${22 + (i % 7) * 3}s`,
+              "--drift": `${((i * 31) % 150) - 75}px`
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function App() {
