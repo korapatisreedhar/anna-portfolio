@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import profilePhoto from "./assets/profile-photo.png";
 import "./style.css";
 
 const projects = [
@@ -96,9 +97,36 @@ const projects = [
 ];
 
 const skills = [
-  ["React JS", 95], ["Redux", 92], ["JavaScript", 94], ["TypeScript", 88],
-  ["HTML5", 95], ["CSS3", 93], ["Bootstrap", 90], ["Gatsby JS", 82],
-  ["REST / Web Services", 86], ["GitHub / GitLab", 86], ["Webpack", 78], ["JS ES5 / ES6", 92]
+  "React JS", "Redux", "JavaScript", "TypeScript",
+  "HTML5", "CSS3", "Bootstrap", "Gatsby JS",
+  "REST / Web Services", "GitHub / GitLab", "Webpack", "JS ES5 / ES6"
+];
+
+const certifications = [
+  {
+    name: "Git Essential Training",
+    issuer: "LinkedIn",
+    date: "May 2024",
+    icon: "bi-git"
+  },
+  {
+    name: "Atlassian Agile Project Management Professional Certificate",
+    issuer: "Atlassian",
+    date: "Mar 2024",
+    icon: "bi-kanban"
+  },
+  {
+    name: "Node.js Essential Training",
+    issuer: "LinkedIn",
+    date: "Mar 2024",
+    icon: "bi-code-slash"
+  },
+  {
+    name: "Scrum: The Basics",
+    issuer: "LinkedIn",
+    date: "Mar 2024",
+    icon: "bi-check2-circle"
+  }
 ];
 
 function Particles() {
@@ -116,7 +144,6 @@ function App() {
   const [dark, setDark] = useState(true);
   const [menu, setMenu] = useState(false);
   const [filter, setFilter] = useState("All");
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     document.body.className = dark ? "dark" : "light";
@@ -131,24 +158,6 @@ function App() {
     return /Verizon|TNFB|Ydel|Union|Provider/i.test(p.client + p.name);
   });
 
-  const sendContact = async (e) => {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const payload = Object.fromEntries(form.entries());
-    try {
-      const res = await fetch("http://localhost:5000/api/contact", {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      setMessage(data.message || "Message submitted.");
-      e.currentTarget.reset();
-    } catch {
-      setMessage("Backend is not running. Start the Flask server to enable contact submission.");
-    }
-  };
-
   return (
     <div className="app">
       <Particles />
@@ -158,7 +167,7 @@ function App() {
           <button className="navbar-toggler" onClick={() => setMenu(!menu)}><i className="bi bi-list"></i></button>
           <div className={`collapse navbar-collapse ${menu ? "show" : ""}`}>
             <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-3">
-              {["Home","About","Skills","Experience","Projects","Contact"].map(x =>
+              {["Home","About","Skills","Certifications","Experience","Projects","Contact"].map(x =>
                 <li className="nav-item" key={x}><a className="nav-link" href={`#${x.toLowerCase()}`} onClick={()=>setMenu(false)}>{x}</a></li>
               )}
               <li><button className="theme-btn" onClick={()=>setDark(!dark)} aria-label="Toggle theme"><i className={`bi ${dark ? "bi-sun" : "bi-moon"}`}></i></button></li>
@@ -186,7 +195,7 @@ function App() {
             <div className="col-lg-5 text-center">
               <div className="profile-wrap">
                 <div className="profile-shape">
-                  <div className="profile-placeholder"><i className="bi bi-person-bounding-box"></i><small>Add profile photo</small></div>
+                  <img className="profile-photo" src={profilePhoto} alt="Ramesh Korapati" />
                 </div>
               </div>
             </div>
@@ -217,17 +226,46 @@ function App() {
         <section id="skills" className="section container">
           <div className="section-heading"><span>02</span><h2>Technology Stack</h2></div>
           <div className="row g-4">
-            {skills.map(([name, val]) => <div className="col-md-6 col-lg-4" key={name}>
+            {skills.map(name => <div className="col-md-6 col-lg-4" key={name}>
               <div className="skill-card">
-                <div className="d-flex justify-content-between"><b>{name}</b><span>{val}%</span></div>
-                <div className="progress"><div className="progress-bar" style={{width:`${val}%`}}></div></div>
+                <b>{name}</b>
               </div>
             </div>)}
           </div>
         </section>
 
+        <section id="certifications" className="section container">
+          <div className="section-heading"><span>03</span><h2>Certifications</h2></div>
+          <div className="row g-4">
+            {certifications.map(cert => (
+              <div className="col-md-6" key={cert.name}>
+                <article className="cert-card h-100">
+                  <div className="cert-icon" aria-hidden="true">
+                    <i className={`bi ${cert.icon}`}></i>
+                  </div>
+                  <div className="cert-content">
+                    <h3>{cert.name}</h3>
+                    <p className="cert-issuer">{cert.issuer}</p>
+                    <span className="cert-date">Issued {cert.date}</span>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-4">
+            <a
+              className="btn btn-outline-light secondary-btn"
+              href="https://www.linkedin.com/in/korapati-ramesh-a88075125/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View LinkedIn Profile <i className="bi bi-box-arrow-up-right ms-1"></i>
+            </a>
+          </div>
+        </section>
+
         <section id="experience" className="section container">
-          <div className="section-heading"><span>03</span><h2>Experience</h2></div>
+          <div className="section-heading"><span>04</span><h2>Experience</h2></div>
           <div className="timeline">
             <div className="timeline-item"><span>May 2021 – Present</span><h3>Senior Associate Developer</h3><p>HTC Global Services (India) Private Ltd.</p></div>
             <div className="timeline-item"><span>Sep 2019 – Apr 2021</span><h3>Senior Software Developer</h3><p>Verizon Data Services — Tech Star Software Development India Pvt Ltd, Chennai.</p></div>
@@ -236,7 +274,7 @@ function App() {
         </section>
 
         <section id="projects" className="section container">
-          <div className="section-heading"><span>04</span><h2>Selected Projects</h2></div>
+          <div className="section-heading"><span>05</span><h2>Selected Projects</h2></div>
           <div className="filter-bar">
             {categories.map(c => <button key={c} className={filter===c ? "active" : ""} onClick={()=>setFilter(c)}>{c}</button>)}
           </div>
@@ -270,7 +308,7 @@ function App() {
         </section>
 
         <section id="contact" className="section container pb-5">
-          <div className="section-heading"><span>05</span><h2>Let's Connect</h2></div>
+          <div className="section-heading"><span>06</span><h2>Let's Connect</h2></div>
           <div className="row g-4">
             <div className="col-lg-5">
               <div className="card-glass h-100">
@@ -281,16 +319,29 @@ function App() {
               </div>
             </div>
             <div className="col-lg-7">
-              <form className="card-glass" onSubmit={sendContact}>
-                <div className="row g-3">
-                  <div className="col-md-6"><input name="name" required placeholder="Your name"/></div>
-                  <div className="col-md-6"><input name="email" type="email" required placeholder="Email address"/></div>
-                  <div className="col-12"><input name="subject" placeholder="Subject"/></div>
-                  <div className="col-12"><textarea name="message" required rows="5" placeholder="Tell me about your project"></textarea></div>
-                  <div className="col-12"><button className="btn btn-danger px-4">Send Message <i className="bi bi-send"></i></button></div>
-                  {message && <div className="col-12 small text-secondary">{message}</div>}
+              <div className="card-glass h-100">
+                <h3>Resume &amp; Profiles</h3>
+                <p>Explore my experience and connect with me professionally.</p>
+                <div className="d-flex flex-wrap gap-3 mt-4">
+                  <a
+                    className="btn btn-danger px-4"
+                    href="/Ramesh_Korapati_CV.pdf"
+                    download
+                  >
+                    <i className="bi bi-file-earmark-pdf me-2"></i>
+                    Download Resume
+                  </a>
+                  <a
+                    className="btn btn-outline-light secondary-btn px-4"
+                    href="https://www.linkedin.com/in/korapati-ramesh-a88075125/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <i className="bi bi-linkedin me-2"></i>
+                    LinkedIn Profile
+                  </a>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </section>
